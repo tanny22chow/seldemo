@@ -1,18 +1,30 @@
 package org.example;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 
 public class DriverManager {
 
-    public static WebDriver d;
-    private DriverManager(){
-        if(d==null){
-            d=new EdgeDriver();
-        }
+    private ThreadLocal<WebDriver> thredsafeDriverPool=new ThreadLocal<WebDriver>();
+    private static WebDriver d;
+
+    private ThreadLocal<WebDriver> getThredsafeDriverPool() {
+        return thredsafeDriverPool;
     }
+    private DriverManager(){
+        String browser=System.getProperty("browser");
+        switch (browser){
+            case "chrome":
+                d=new ChromeDriver();
+                break;
+            default:
+                d=new EdgeDriver();
+                break;
+            }
+            thredsafeDriverPool.set(d);
+        }
     public static WebDriver getInstance(){
-        new DriverManager();
-        return d;
+       return new DriverManager().getThredsafeDriverPool().get();
     }
 }

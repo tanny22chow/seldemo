@@ -3,7 +3,7 @@ package org.example;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class DemoPage {
+public class DemoPage extends BasePage {
     WebDriver d;
     public static DemoPage demopage;
     @Search(type = "id",val = "gsc-i-id1")
@@ -19,8 +19,9 @@ public class DemoPage {
         if(demopage!=null){
             return demopage;
         }
-        demopage= new DemoPage(d);
-        return demopage;
+        demopage=new DemoPage(d);
+        threadSafePageObjects.set(demopage);
+        return (DemoPage) threadSafePageObjects.get() ;
     }
 
     public DemoPage getSearchText(){
