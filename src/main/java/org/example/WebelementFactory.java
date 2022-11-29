@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.annotations.Search;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import java.lang.reflect.Field;

@@ -1,9 +1,12 @@
-package org.example;
+package org.example.pageobjects.pageimpl;
 
+import org.example.WebelementFactory;
+import org.example.annotations.Search;
+import org.example.pageobjects.pages.DemoPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class DemoPage extends BasePage {
+public class DemoPageImpl extends BasePage implements DemoPage {
     WebDriver d;
     public static DemoPage demopage;
     @Search(type = "id",val = "gsc-i-id1")
@@ -11,7 +14,7 @@ public class DemoPage extends BasePage {
     @Search(type = "xpath",val = "//h4[text()='Search for your Favorite Course']")
     public WebElement searchFieldText;
 
-    private DemoPage(WebDriver d){
+    private DemoPageImpl(WebDriver d){
         this.d=d;
         WebelementFactory.init(this,d);
     }
@@ -19,7 +22,7 @@ public class DemoPage extends BasePage {
         if(demopage!=null){
             return demopage;
         }
-        demopage=new DemoPage(d);
+        demopage=new DemoPageImpl(d);
         threadSafePageObjects.set(demopage);
         return (DemoPage) threadSafePageObjects.get() ;
     }

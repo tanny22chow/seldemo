@@ -6,7 +6,7 @@ import org.openqa.selenium.edge.EdgeDriver;
 
 public class DriverManager {
 
-    private ThreadLocal<WebDriver> thredsafeDriverPool=new ThreadLocal<WebDriver>();
+    private ThreadLocal<WebDriver> thredsafeDriverPool=new ThreadLocal<>();
     private static WebDriver d;
 
     private ThreadLocal<WebDriver> getThredsafeDriverPool() {
@@ -14,14 +14,18 @@ public class DriverManager {
     }
     private DriverManager(){
         String browser=System.getProperty("browser");
-        switch (browser){
-            case "chrome":
-                d=new ChromeDriver();
-                break;
-            default:
-                d=new EdgeDriver();
-                break;
+        if(browser==null){
+            d=new EdgeDriver();
+        }else{
+            switch (browser){
+                case "chrome":
+                    d=new ChromeDriver();
+                    break;
+                default:
+                    d=new EdgeDriver();
+                    break;
             }
+        }
             thredsafeDriverPool.set(d);
         }
     public static WebDriver getInstance(){
