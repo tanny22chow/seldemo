@@ -1,4 +1,4 @@
-package org.example.pageobjects.pages;
+package com.grid.pageobjects.pages;
 
 public interface DemoPage {
      DemoPage getSearchText();

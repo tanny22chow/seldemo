@@ -1,12 +1,17 @@
-package org.example.pageobjects.pageimpl;
+package com.grid.pageobjects.pageimpl;
 
-import org.example.WebelementFactory;
-import org.example.annotations.Search;
-import org.example.pageobjects.pages.DemoPage;
+import com.grid.WebelementFactory;
+import com.grid.annotations.Search;
+import com.grid.pageobjects.pages.DemoPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class DemoPageImpl extends BasePage implements DemoPage {
+
+    Logger logger= LoggerFactory.getLogger(this.getClass());
     WebDriver d;
     public static DemoPage demopage;
     @Search(type = "id",val = "gsc-i-id1")
@@ -19,16 +24,12 @@ public class DemoPageImpl extends BasePage implements DemoPage {
         WebelementFactory.init(this,d);
     }
     public static DemoPage getPageInstance(WebDriver d){
-        if(demopage!=null){
-            return demopage;
-        }
         demopage=new DemoPageImpl(d);
-        threadSafePageObjects.set(demopage);
-        return (DemoPage) threadSafePageObjects.get() ;
+        return demopage;
     }
 
     public DemoPage getSearchText(){
-        System.out.println(searchFieldText.getText());
+        logger.info("entering keys in the field");
         searchField.sendKeys("java");
         return this;
     }
